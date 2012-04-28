@@ -1,11 +1,18 @@
-(ns one.sample.api
+(ns jammer.api
   "The server side of the sample application. Provides a simple API for
   updating an in-memory database."
+  (:require [jammer.crypto :as crypto]
+            [clj-json.core :as json])
   (:use [compojure.core :only (defroutes POST)]))
 
 (defonce ^:private next-id (atom 0))
 
 (defonce ^:dynamic *database* (atom #{}))
+
+(defn json-response [data & [status]]
+  {:status (or status 200)
+   :headers {"Content-Type" "application/json"}
+   :body (json/generate-string data)})
 
 (defmulti remote
   "Multimethod to handle incoming API calls. Implementations are
@@ -31,3 +38,16 @@
          (remote
           (binding [*read-eval* false]
             (read-string data))))))
+
+;;This data should also be more hidden in env vars or something.
+(def app_key "c31ce5204231d5cdd28d")
+(def secret_key "f824caa7dea2ec85e92a")
+
+(defroutes pusher-ajax-auth
+  (POST "/pusher/auth" {params :params}
+        (println params)))
+;;        (json-response {:auth (str
+;;                               app_key
+;;                               ":"
+;;                               (crypto/get-signiture
+;;                                channel_name socket_id secret_key))})))

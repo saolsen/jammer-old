@@ -1,4 +1,4 @@
-(ns one.sample.dev-server
+(ns jammer.dev-server
   "Serve a friendly ClojureScript environment with code reloading and
    the ClojureScript application in both development and advanced
    compiled mode."
@@ -13,8 +13,8 @@
         [cljs.repl.browser :only (repl-env)]
         [one.templates :only (load-html apply-templates render)]
         [one.host-page :only (application-host)]
-        [one.sample.api :only (remote-routes)]
-        [one.sample.config])
+        [jammer.api :only (remote-routes pusher-ajax-auth)]
+        [jammer.config])
   (:require [net.cgrand.enlive-html :as html]
             [one.reload :as reload])
   (:import java.io.File))
@@ -29,6 +29,7 @@
 
 (defroutes app-routes
   remote-routes
+  pusher-ajax-auth
   (GET "/development" request (make-host-page request))
   (GET "/production" request (make-host-page request) )
   (GET "/design*" {{file :*} :route-params}

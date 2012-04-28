@@ -1,4 +1,4 @@
-(ns one.sample.prod-server
+(ns jammer.prod-server
   "Production server serves the backend API. This is only required if
   there is a backend API."
   (:use [ring.adapter.jetty :only (run-jetty)]
@@ -7,7 +7,7 @@
         [ring.middleware.params :only (wrap-params)]
         [ring.util.response :only (file-response)]
         [compojure.core :only (defroutes ANY)]
-        [one.sample.api :only (remote-routes)]))
+        [jammer.api :only (remote-routes pusher-ajax-auth)]))
 
 (def ^:private root "out/public")
 
@@ -17,6 +17,7 @@
 
 (defroutes app-routes
   remote-routes
+  pusher-ajax-auth
   (-> (ANY "*" request (file-response "404.html" {:root root}))
       (wrap-file root)
       wrap-file-info))

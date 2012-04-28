@@ -1,10 +1,10 @@
-(ns one.sample.repl
+(ns jammer.repl
   "The starting namespace for the project. This is the namespace that
   users will land in when they start a Clojure REPL. It exists to
   provide convenience functions like 'go' and 'dev-server'."
   (:use [clojure.repl])
   (:require [one.tools :as tools]
-            [one.sample.dev-server :as dev]
+            [jammer.dev-server :as dev]
             [clojure.java.browse :as browse]))
 
 (defn go
