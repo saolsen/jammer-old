@@ -18,3 +18,10 @@
     (destroy-children! content)
     (set-html! content welcome-html)
     (append! content login-form-html)))
+
+(defn loading-screen
+  "Does some kind of cool loading animation (someday)"
+  [loading-page]
+  (let [content (xpath "//div[@id='content']")]
+    (destroy-children! content)
+    (set-html! content loading-page)))

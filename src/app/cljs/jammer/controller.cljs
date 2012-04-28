@@ -8,7 +8,6 @@
             [one.dispatch :as dispatch]
             [goog.uri.utils :as uri]))
 
-
 (defmulti action :type)
 
 (defmethod action :init [_]

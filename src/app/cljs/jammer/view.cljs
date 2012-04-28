@@ -16,9 +16,6 @@
 
 ;; Form management, I can add in some validation like it's done in one later.
 
-
-
-
 (defmulti render
   "Accepts a map that represents the current state of the application.
    Renders a view based on the value of the `:state` key."
@@ -39,9 +36,9 @@
                                  :room (value (by-id "room-input"))})))
 
 (defmethod render :loading-jamview [_]
-  (js/alert "loading...."))
+  (fx/loading-screen (:loading snippets)))
 
 (defmethod render :jamming [{:keys [name room]}]
-  ())
+  (js/alert "jamming fired"))
 
 (dispatch/react-to #{:state-change} (fn [_ m] (render m)))

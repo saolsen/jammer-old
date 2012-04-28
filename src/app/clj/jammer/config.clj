@@ -20,6 +20,9 @@
                    "goog.require('jammer.controller');"
                    "goog.require('jammer.history');"
                    "goog.require('jammer.logging');"
+                   "goog.require('jammer.pusher');"
+                   "goog.require('jammer.jamming');"
+                   "goog.require('jammer.sound');"
                    "jammer.core.start();jammer.core.repl();"]
           ;; This needs to be the entrypoint of my app, not the sample.
           :prod-js ["jammer.core.start();"]
