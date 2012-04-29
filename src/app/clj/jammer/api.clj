@@ -45,9 +45,12 @@
 
 (defroutes pusher-ajax-auth
   (POST "/pusher/auth" {params :params}
-        (println params)))
-;;        (json-response {:auth (str
-;;                               app_key
-;;                               ":"
-;;                               (crypto/get-signiture
-;;                                channel_name socket_id secret_key))})))
+        (let [channel_name (get params "channel_name")
+              socket_id (get params "socket_id")]
+          (println channel_name)
+          (println socket_id)
+          (json-response {:auth (str
+                                 app_key
+                                 ":"
+                                 (crypto/get-signiture
+                                  channel_name socket_id secret_key))}))))

@@ -2,11 +2,14 @@
   application state."}
   jammer.controller
   (:use [one.browser.remote :only (request)]
-        [jammer.model :only (state)])
+        [jammer.model :only (state pusher-key username channel)])
   (:require [cljs.reader :as reader]
             [clojure.browser.event :as event]
             [one.dispatch :as dispatch]
-            [goog.uri.utils :as uri]))
+            [goog.uri.utils :as uri]
+            [jammer.pusher :as pusher]
+            [jammer.jamming :as jam]
+            [jammer.sound :as sound]))
 
 (defmulti action :type)
 
@@ -23,8 +26,14 @@
 ;; so that the user sees something and doesn't just think the button
 ;; is broken.
 (defmethod action :jam [{:keys [name room]}]
-  (dispatch/fire :pusher-login {:name name :room (str "private-" room)})
-  (reset! state {:state :loading-jamview}))
+  (reset! state {:state :loading-jamview})
+  (reset! username name)
+  (reset! channel room)
+  (pusher/initialize-pusher pusher-key)
+  (pusher/subscribe (str "private-" room))
+  (pusher/bind "pusher:subscription_succeeded" (fn [] (jam/init-timer name)))
+  (sound/load-files)
+  (reset! state {:state :jamming}))
 
 ;; When one of these dispatches are fired we add the type to the data
 ;; map and call action on it.

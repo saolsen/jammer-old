@@ -39,6 +39,6 @@
   (fx/loading-screen (:loading snippets)))
 
 (defmethod render :jamming [{:keys [name room]}]
-  (js/alert "jamming fired"))
+  (js/alert "jamming now :)"))
 
 (dispatch/react-to #{:state-change} (fn [_ m] (render m)))
