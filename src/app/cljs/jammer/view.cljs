@@ -38,7 +38,7 @@
 (defmethod render :loading-jamview [_]
   (fx/loading-screen (:loading snippets)))
 
-(defmethod render :jamming [{:keys [name room]}]
-  (js/alert "jamming now :)"))
+(defmethod render :jamming [_]
+  (fx/create-jamview (:piano snippets)))
 
 (dispatch/react-to #{:state-change} (fn [_ m] (render m)))

@@ -16,4 +16,5 @@
   []
   {:greeting (snippet "greeting.html" [:div#greeting])
    :login (snippet "loginform.html" [:div#form])
-   :loading (snippet "loadingscreen.html" [:div#loading])})
+   :loading (snippet "loadingscreen.html" [:div#loading])
+   :piano (snippet "piano.html" [:div#piano])})

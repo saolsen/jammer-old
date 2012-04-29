@@ -25,3 +25,10 @@
   (let [content (xpath "//div[@id='content']")]
     (destroy-children! content)
     (set-html! content loading-page)))
+
+(defn create-jamview
+  "Sets up your jamview! Will get more complex I hope later."
+  [jam-html]
+  (let [content (xpath "//div[@id='content']")]
+    (destroy-children! content)
+    (set-html! content jam-html)))
